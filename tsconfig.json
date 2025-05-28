@@ -1,10 +1,37 @@
 {
-  "extends": "../tsconfig.json",
-  "include": ["**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "baseUrl": ".",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["Es2021", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "types": ["@testing-library/jest-dom", "vitest/globals", "vite/client"],
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": ["../src/*"]
+      "@/*": ["./src/*"]
     }
-  }
+  },
+  "plugins": [
+    // Transform paths in output .js files
+    { "transform": "typescript-transform-paths" },
+
+    // Transform paths for declarations files
+    { "transform": "typescript-transform-paths", "afterDeclarations": true }
+  ],
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
