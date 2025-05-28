@@ -1,9 +1,9 @@
-import { ReactElement, useEffect, useRef } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { HighCharts, HighchartsReact } from '@/lib/highchartsInitialization';
 import { Loading } from '@/components/Loading';
 import { XYChartProps, XYSeriesDescriptor } from '@/components/XYChartTypes';
 import { getXYChartOptions } from '@/components/XYChartOptions.ts';
-import { Chart } from '@/types/chartTypes';
+import { useChartRef } from 'src/lib/useChartRef';
 
 export type { XYChartProps, XYSeriesDescriptor };
 
@@ -15,25 +15,15 @@ export function XYChart({
   zoom,
   ...options
 }: XYChartProps): ReactElement {
-  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
-  const chart = useRef<Chart>();
-
-  const chartCallback = (chartHandle: Chart) => {
-    chart.current = chartHandle;
-  };
-
-  useEffect(() => {
-    if (chart?.current && Array.isArray(chart.current.xAxis)) {
-      chart.current.xAxis[0].setExtremes(zoom?.min, zoom?.max);
-    }
-  }, [chart.current, zoom?.max, zoom?.min]);
-
   const { chartRefCallback } = options;
+
+  const { chartComponentRef, chartRef, chartCallback } = useChartRef(chartRefCallback);
+
   useEffect(() => {
-    if (chartRefCallback) {
-      chartRefCallback(chart);
+    if (chartRef?.current && Array.isArray(chartRef.current.xAxis)) {
+      chartRef.current.xAxis[0].setExtremes(zoom?.min, zoom?.max);
     }
-  }, [chartRefCallback, chart]);
+  }, [chartRef, zoom?.max, zoom?.min]);
 
   if (isLoading) {
     return <Loading height={height} width={width} />;

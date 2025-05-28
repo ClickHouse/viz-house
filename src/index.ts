@@ -8,12 +8,7 @@ export { TimeSeriesChart } from '@/components/TimeSeriesChart';
 
 // Lib
 export { Gradients } from '@/lib/gradients';
-export {
-  addEvent,
-  formatDate,
-  getTooltipDateFormat,
-  removeEvent
-} from '@/lib/chartUtils';
+export { addEvent, getTooltipDateFormat, removeEvent } from '@/lib/chartUtils';
 export { getExpandingWidthTooltipFormatter } from '@/lib/tooltip';
 
 // Types
@@ -30,6 +25,7 @@ export type {
 
 export type {
   AxisLabelsFormatterContext,
+  BoostOptions,
   Chart,
   EventCallbackFunction,
   EventOptionsObject,
@@ -41,6 +37,7 @@ export type {
   SeriesDescriptor,
   SeriesName,
   SeriesOptionsType,
+  Tooltip,
   TooltipFormatter,
   TooltipPointFormatter,
   TooltipPointFormatterArgs,

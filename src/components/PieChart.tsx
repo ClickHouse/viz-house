@@ -1,7 +1,8 @@
-import { ReactElement, useRef } from 'react';
+import { MutableRefObject, ReactElement } from 'react';
 import { HighCharts, HighchartsReact } from '@/lib/highchartsInitialization';
 import { GradientColor } from '@/lib/gradients';
 import {
+  Chart,
   LegendVerticalPosition,
   PieChartValue,
   TooltipFormatter,
@@ -11,6 +12,7 @@ import { getDefaultLegendOptions } from '@/lib/chartUtils';
 import { getDefaultTooltipOptions } from '@/lib/tooltip';
 import merge from 'lodash/merge';
 import { Loading } from '@/components/Loading';
+import { useChartRef } from 'src/lib/useChartRef';
 
 // Description of a single series in a pie chart.
 export type PieSeriesDescriptor = {
@@ -69,6 +71,8 @@ export interface PieChartProps {
    * Position of the legend, hidden by default.
    */
   legendPosition?: LegendVerticalPosition;
+  /** A function for that passes a handle to the HighCharts chart as its argument */
+  chartRefCallback?: (ref: MutableRefObject<Chart | undefined>) => void;
 }
 /**
  * Convert viz-house PieChart options to Highcharts tooltip options.
@@ -179,7 +183,9 @@ export const PieChart = ({
   isLoading = false,
   ...additionalOptions
 }: PieChartProps): ReactElement => {
-  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+  const { chartRefCallback } = additionalOptions;
+
+  const { chartComponentRef, chartCallback } = useChartRef(chartRefCallback);
 
   if (isLoading) {
     return <Loading height={height} width={width} />;
@@ -193,6 +199,7 @@ export const PieChart = ({
       ref={chartComponentRef}
       highcharts={HighCharts}
       containerProps={containerProps}
+      callback={chartCallback}
     />
   );
 };

@@ -10,6 +10,7 @@ import { getDefaultTooltipOptions } from '@/lib/tooltip';
 import { getPlotOptions } from '@/components/XYChartPlotOptions';
 import { isBarChart, XYChartProps } from '@/components/XYChartTypes';
 import { SeriesOptionsType } from '@/types/chartTypes';
+import isEmpty from 'lodash/isEmpty';
 
 function getXAxisOptions(props: XYChartProps): HighCharts.XAxisOptions {
   const xAxisOptions = getDefaultXAxisOptions();
@@ -18,6 +19,7 @@ function getXAxisOptions(props: XYChartProps): HighCharts.XAxisOptions {
 
   xAxisOptions.labels = xAxisOptions.labels ?? {};
   xAxisOptions.labels.rotation = props?.xAxis?.verticalLabels ? -45 : undefined;
+  xAxisOptions.labels.autoRotation = props?.labelAutoRotation ?? undefined;
   // Default rotation for x-axis labels when there is not enough space to show every label.
   // It must be set to non-zero value in order to enable automatic skipping of labels
   // in case when there is not enough space.
@@ -55,6 +57,19 @@ function getXAxisOptions(props: XYChartProps): HighCharts.XAxisOptions {
   }
 
   xAxisOptions.gridLineWidth = props.verticalGridLines ? 1 : undefined;
+
+  if (Array.isArray(props.verticalAnnotations)) {
+    xAxisOptions.plotLines = props.verticalAnnotations.map((annotation) => {
+      return {
+        color: annotation.color ?? '#00FFD4',
+        dashStyle: annotation.dashStyle ?? 'Solid',
+        label: annotation.label,
+        value: annotation.value,
+        width: 1,
+        zIndex: annotation.zIndex ?? 2 // above gridlines but below chart lines
+      };
+    });
+  }
 
   return xAxisOptions;
 }
@@ -102,6 +117,19 @@ export function getYAxisOptions(
       yAxisOptions.opposite = true;
     }
 
+    if (Array.isArray(props.horizontalAnnotations)) {
+      yAxisOptions.plotLines = props.horizontalAnnotations.map((annotation) => {
+        return {
+          color: annotation.color ?? '#00FFD4',
+          dashStyle: annotation.dashStyle ?? 'Solid',
+          label: annotation.label,
+          value: annotation.value,
+          width: 1,
+          zIndex: annotation.zIndex ?? 2 // above gridlines but below chart lines
+        };
+      });
+    }
+
     yAxisOptionsArray.push(yAxisOptions);
   });
 
@@ -118,7 +146,26 @@ function getChartOptions(props: XYChartProps): HighCharts.ChartOptions {
 }
 
 function getTooltipOptions(props: XYChartProps): HighCharts.TooltipOptions {
-  return getDefaultTooltipOptions(props.tooltipPointFormatter, props.tooltipFormatter);
+  const tooltipOptions = getDefaultTooltipOptions(
+    props.tooltipPointFormatter,
+    props.tooltipFormatter
+  );
+
+  if (!isEmpty(props.tooltip)) {
+    if (props.tooltip.outside !== undefined) {
+      tooltipOptions.outside = props.tooltip.outside;
+    }
+
+    if (props.tooltip.shared !== undefined) {
+      tooltipOptions.shared = props.tooltip.shared;
+    }
+
+    if (props.tooltip.split !== undefined) {
+      tooltipOptions.split = props.tooltip.split;
+    }
+  }
+
+  return tooltipOptions;
 }
 
 function getLegendOptions(props: XYChartProps): HighCharts.LegendOptions {
@@ -216,6 +263,10 @@ export function getXYChartOptions(props: XYChartProps): HighCharts.Options {
     result.title = { text: props.title };
   } else {
     result.title = { text: '' };
+  }
+
+  if (!isEmpty(props.boost)) {
+    result.boost = props.boost;
   }
 
   result.chart = getChartOptions(props);

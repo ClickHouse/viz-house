@@ -8,6 +8,14 @@ describe('The expanding width tooltip formatter', () => {
     { x: date.valueOf(), y: 7509, color: '#00E513', series: { name: 'bar' } }
   ];
 
+  const series = {
+    chart: {
+      time: {
+        dateFormat: HighCharts.dateFormat
+      }
+    }
+  };
+
   const formatYValue = vi.fn((yValue: number | null | undefined): string => {
     return `${yValue}`;
   });
@@ -16,12 +24,13 @@ describe('The expanding width tooltip formatter', () => {
     const timePeriod = 'LAST_HOUR';
     const self = {
       points,
+      series,
       x: date.valueOf()
     };
     const tooltipFormatter = getExpandingWidthTooltipFormatter(timePeriod, formatYValue);
 
     const formattedTooltip = tooltipFormatter.call(
-      self as HighCharts.TooltipFormatterContextObject,
+      self as unknown as HighCharts.TooltipFormatterContextObject,
       {} as HighCharts.Tooltip
     );
 
@@ -46,6 +55,7 @@ describe('The expanding width tooltip formatter', () => {
     const timePeriod = 'LAST_HOUR';
     const self = {
       points: manyPoints,
+      series,
       x: date.valueOf()
     };
     const tooltipFormatter = getExpandingWidthTooltipFormatter(timePeriod, formatYValue);
@@ -75,6 +85,7 @@ describe('The expanding width tooltip formatter', () => {
     const timePeriod = 'LAST_HOUR';
     const self = {
       points: manyPoints,
+      series,
       x: date.valueOf()
     };
     const tooltipFormatter = getExpandingWidthTooltipFormatter(timePeriod, formatYValue);
@@ -93,6 +104,7 @@ describe('The expanding width tooltip formatter', () => {
   describe('date formats', () => {
     const self = {
       points,
+      series,
       x: date.valueOf()
     };
     it('formats dates for LAST_DAY periods', () => {

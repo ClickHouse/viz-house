@@ -1,9 +1,11 @@
 import HighchartsReact from 'highcharts-react-official';
 import { GradientColor } from '@/lib/gradients';
 import {
+  Annotation,
   Chart,
   LegendVerticalPosition,
   SeriesName,
+  Tooltip,
   TooltipFormatter,
   TooltipPointFormatter,
   xAxis,
@@ -12,6 +14,7 @@ import {
   YValue
 } from '@/types/chartTypes';
 import { MutableRefObject } from 'react';
+import { BoostOptions } from 'highcharts';
 
 /** The type of XY chart. */
 export type XYSeriesType = 'area' | 'bar' | 'bellcurve' | 'column' | 'line' | 'scatter';
@@ -32,6 +35,8 @@ export type XYSeriesDescriptor = {
 export interface XYChartProps {
   /** The series data to be displayed on the chart. */
   series: Array<XYSeriesDescriptor>;
+  /** Highchart.Boost options */
+  boost?: BoostOptions;
   /** A function for that passes a handle to the HighCharts chart as its argument */
   chartRefCallback?: (ref: MutableRefObject<Chart | undefined>) => void;
   /** If true, logs the chart configuration to the console for debugging. */
@@ -42,6 +47,8 @@ export interface XYChartProps {
   height?: string;
   /** Allows overriding the default HighchartsReact props. */
   highChartsPropsOverrides?: HighchartsReact.Props;
+  /** Configure a line that goes across the x axis */
+  horizontalAnnotations?: Array<Annotation>;
   /** If true, displays a loading spinner instead of the chart. */
   isLoading?: boolean;
   /** The position of the legend, hidden by default. */
@@ -54,10 +61,14 @@ export interface XYChartProps {
   subtitle?: string;
   /** The title of the chart. */
   title?: string;
+  /** Tooltip configuration options */
+  tooltip?: Tooltip;
   /** Function to format the entire tooltip */
   tooltipFormatter?: TooltipFormatter;
   /** Function to format the content of an individual tooltip point (automatically applied to all points). */
   tooltipPointFormatter?: TooltipPointFormatter;
+  /** Configure a line that goes up and down the y axis */
+  verticalAnnotations?: Array<Annotation>;
   /* If true, shows vertical grid lines on the chart. */
   verticalGridLines?: boolean;
   /** The width of the chart container, can be any valid CSS width value. */
@@ -71,6 +82,8 @@ export interface XYChartProps {
   yAxis?: yAxis | yAxis[];
   /** Configuration for zooming, defining minimum and maximum zoom levels. */
   zoom?: { max?: number; min?: number };
+
+  labelAutoRotation?: Array<number>;
 }
 
 export const isBarChart = (series: XYSeriesDescriptor[]): boolean => {

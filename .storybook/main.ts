@@ -16,7 +16,11 @@ const config: StorybookConfig = {
   core: {
     disableTelemetry: true
   },
-  stories: ['../docs/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)', '../src/**/*.mdx'],
+  stories: [
+    '../docs/**/*.mdx',
+    '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../src/**/*.mdx'
+  ],
   staticDirs: ['../public'],
   addons: [
     getAbsolutePath('@storybook/addon-onboarding'),

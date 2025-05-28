@@ -68,8 +68,6 @@ export const removeEvent = (
   HighCharts.removeEvent(chart, eventType, callbackFn);
 };
 
-export const formatDate = HighCharts.dateFormat;
-
 export const getTooltipDateFormat = (timePeriod?: TimePeriod): string => {
   // See https://api.highcharts.com/class-reference/Highcharts.Time#dateFormat.
   switch (timePeriod) {

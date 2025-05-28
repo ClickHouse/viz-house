@@ -11,21 +11,53 @@ const numData: XYChartValue[] = [
   { x: 19, y: 133 }
 ];
 
+const series = [
+  {
+    name: 'Test series',
+    values: [
+      { x: '2020-01-01', y: 50 },
+      { x: '2020-01-02', y: 10 },
+      { x: '2020-01-03', y: 20 }
+    ]
+  }
+];
+
 const seriesDescriptor: XYSeriesDescriptor = { values: numData, type: 'line' };
 
 describe('XYCharts', () => {
   it('renders an xy chart', () => {
-    const series = [
-      {
-        name: 'Test series',
-        values: [
-          { x: '2020-01-01', y: 50 },
-          { x: '2020-01-02', y: 10 },
-          { x: '2020-01-03', y: 20 }
-        ]
-      }
-    ];
+    render(
+      <ClickUIWrapper>
+        <XYChart series={series} />
+      </ClickUIWrapper>
+    );
 
+    expect(screen.getByText('2020-01-01')).toBeInTheDocument();
+  });
+
+  it('calls chartRefCallback with chart reference', () => {
+    const mockChartRefCallback = vi.fn();
+
+    render(
+      <ClickUIWrapper>
+        <XYChart series={series} chartRefCallback={mockChartRefCallback} />
+      </ClickUIWrapper>
+    );
+
+    expect(mockChartRefCallback).toHaveBeenCalled();
+
+    // Get the argument passed to the callback
+    const callArg = mockChartRefCallback.mock.calls[0][0];
+    expect(callArg).toBeDefined();
+
+    if (callArg.current) {
+      // If current exists, we can check for chart property
+      expect(callArg).toHaveProperty('current');
+    }
+  });
+
+  it('works correctly without a chartRefCallback', () => {
+    // Should render without errors when no callback provided
     render(
       <ClickUIWrapper>
         <XYChart series={series} />
@@ -36,17 +68,6 @@ describe('XYCharts', () => {
   });
 
   it('displays a loading state when the chart is loading', () => {
-    const series = [
-      {
-        name: 'Test series',
-        values: [
-          { x: '2020-01-01', y: 50 },
-          { x: '2020-01-02', y: 10 },
-          { x: '2020-01-03', y: 20 }
-        ]
-      }
-    ];
-
     render(
       <ClickUIWrapper>
         <XYChart isLoading series={series} />
@@ -57,17 +78,6 @@ describe('XYCharts', () => {
   });
 
   it('allows the setting of zoom values', () => {
-    const series = [
-      {
-        name: 'Test series',
-        values: [
-          { x: '2020-01-01', y: 50 },
-          { x: '2020-01-02', y: 10 },
-          { x: '2020-01-03', y: 20 }
-        ]
-      }
-    ];
-
     const handleZoom = vi.fn();
 
     const min = 4;

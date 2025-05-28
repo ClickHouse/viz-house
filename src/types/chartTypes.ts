@@ -7,6 +7,13 @@ import { HighCharts } from '@/lib/highchartsInitialization';
 
 export type AxisLabelsFormatterContext = HighCharts.AxisLabelsFormatterContextObject;
 
+export type Annotation = Pick<
+  HighCharts.AxisPlotLinesOptions,
+  'color' | 'dashStyle' | 'label' | 'value' | 'width' | 'zIndex'
+>;
+
+export type BoostOptions = HighCharts.BoostOptions;
+
 export type Chart = HighCharts.Chart;
 
 export type ColumnType = 'date' | 'number' | 'string';
@@ -31,12 +38,12 @@ export interface ChartConfig {
   series: Array<SeriesValue>;
 }
 
-export interface ColorAxis extends HighCharts.ColorAxisOptions {}
+export type ColorAxis = HighCharts.ColorAxisOptions;
 
 export type EventCallbackFunction<T> = HighCharts.EventCallbackFunction<T>;
 export type EventOptionsObject = HighCharts.EventOptionsObject;
 
-export type HeatmapChartValue = { x: XValue; y: YValue; value: YValue };
+export type HeatmapChartValue = { x: XValue; y: HeatmapYValue; value: YValue };
 
 export interface Legend {
   enabled: boolean;
@@ -68,6 +75,13 @@ export type TimePeriod =
   | 'LAST_YEAR'
   | string;
 
+// Maps to HighCharts.Tooltip
+export interface Tooltip {
+  outside?: boolean; // When set to true, allows the tooltip to be rendered outside of the chart container
+  shared?: boolean; // When set to true, all sereies at that x-axis location will be shown. When set to false, only the currentely hovered series will be shown in the tooltip.
+  split?: boolean; // When set to true, every series will be rendered in a different tooltip. When set to false, all series will share the same tooltip
+}
+
 export type TooltipFormatter = HighCharts.TooltipFormatterCallbackFunction;
 
 export interface TooltipPointFormatterArgs {
@@ -95,6 +109,8 @@ export type XYChartValue = { x: XValue; y: YValue | null; name?: string };
 
 export type YValue = number;
 
+export type HeatmapYValue = YValue | string;
+
 export interface yAxis {
   title?: string;
   ticks?: Array<number>;
@@ -105,6 +121,7 @@ export interface yAxis {
 }
 
 export type YAxisCategories = HighCharts.YAxisOptions['categories'];
+export type XAxisCategories = HighCharts.XAxisOptions['categories'];
 export type YAxisReversed = HighCharts.YAxisOptions['reversed'];
 
 export type ZoomEvent = HighCharts.ExtremesObject;

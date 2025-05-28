@@ -41,6 +41,30 @@ const exampleSeriesValues = [
   { x: '1970', y: 3, value: 0 }
 ];
 
+const yCategoriesData = [
+  { x: 202405, y: 'sev-1', value: 9 },
+  { x: 202405, y: 'sev-2', value: 6 },
+  { x: 202405, y: 'sev-3', value: 25 },
+  { x: 202406, y: 'sev-1', value: 1 },
+  { x: 202406, y: 'sev-2', value: 10 },
+  { x: 202406, y: 'sev-3', value: 30 },
+  { x: 202407, y: 'sev-1', value: 2 },
+  { x: 202407, y: 'sev-2', value: 10 },
+  { x: 202407, y: 'sev-3', value: 18 }
+];
+
+const xAndYCategoriesData = [
+  { x: new Date('2024-01-01'), y: 'sev-1', value: 9 },
+  { x: new Date('2024-01-02'), y: 'sev-2', value: 6 },
+  { x: new Date('2024-01-02'), y: 'sev-3', value: 25 },
+  { x: new Date('2024-01-03'), y: 'sev-1', value: 1 },
+  { x: new Date('2024-01-03'), y: 'sev-2', value: 10 },
+  { x: new Date('2024-01-03'), y: 'sev-3', value: 30 },
+  { x: new Date('2024-01-04'), y: 'sev-1', value: 2 },
+  { x: new Date('2024-01-05'), y: 'sev-2', value: 10 },
+  { x: new Date('2024-01-05'), y: 'sev-3', value: 18 }
+];
+
 const meta: Meta<typeof HeatmapChart> = {
   title: 'components/HeatmapChart',
   component: HeatmapChart,
@@ -122,6 +146,39 @@ export const Primary: Story = {
     title: 'Number of songs each Beatle sang lead vocals on by year',
     yAxis: {
       categories: ['John', 'Paul', 'George', 'Ringo'],
+      reversed: true
+    },
+    hasDataLabels: false
+  }
+};
+
+export const yAxisCategories: Story = {
+  args: {
+    series: [
+      {
+        values: yCategoriesData
+      }
+    ],
+    height: '400px',
+    title: 'Number of support cases each month by severity',
+    yAxis: {
+      reversed: true
+    },
+    hasDataLabels: false
+  }
+};
+
+export const XAndYAxisCategories: Story = {
+  args: {
+    series: [
+      {
+        values: xAndYCategoriesData
+      }
+    ],
+    height: '400px',
+    title: 'Number of support cases each month by severity',
+    subtitle: 'X axis date generated categories, y axis string generated categories',
+    yAxis: {
       reversed: true
     },
     hasDataLabels: false

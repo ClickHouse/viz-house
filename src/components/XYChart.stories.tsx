@@ -9,6 +9,29 @@ import {
 } from '@/types/chartTypes';
 import { useState } from 'react';
 
+const generateRandomInteger = (min: number, max: number) => {
+  return (
+    Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min)
+  );
+};
+
+const generateRandomSeries = (min: number, max: number) => {
+  return [
+    { x: '2020-01-01', y: generateRandomInteger(min, max) },
+    { x: '2020-01-02', y: generateRandomInteger(min, max) },
+    { x: '2020-01-03', y: generateRandomInteger(min, max) },
+    { x: '2020-01-04', y: generateRandomInteger(min, max) },
+    { x: '2020-01-05', y: generateRandomInteger(min, max) },
+    { x: '2020-01-06', y: generateRandomInteger(min, max) },
+    { x: '2020-01-07', y: generateRandomInteger(min, max) },
+    { x: '2020-01-08', y: generateRandomInteger(min, max) },
+    { x: '2020-01-09', y: generateRandomInteger(min, max) },
+    { x: '2020-01-10', y: generateRandomInteger(min, max) },
+    { x: '2020-01-11', y: generateRandomInteger(min, max) },
+    { x: '2020-01-12', y: generateRandomInteger(min, max) }
+  ];
+};
+
 const lData = [
   { x: '2020-01-01', y: 52 },
   { x: '2020-01-02', y: -10 },
@@ -145,6 +168,114 @@ export const Line: Story = {
       labelsFormatter: customLabelsFormatter
     },
     verticalGridLines: true
+  }
+};
+
+export const MultipleLineSeriesWithLegend: Story = {
+  args: {
+    isLoading: false,
+    height: '400px',
+    series: [
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) }
+    ],
+    title: 'Line chart with many series and a legend',
+    width: '500px',
+    tooltipPointFormatter: customTooltipPointFormatter,
+    xAxis: {
+      type: 'datetime',
+      verticalLabels: true,
+      labelsFormatter: customLabelsFormatter
+    },
+    verticalGridLines: true,
+    legendPosition: 'bottom'
+  }
+};
+
+export const LineChartWithHorizontalAnnotation: Story = {
+  args: {
+    isLoading: false,
+    height: '400px',
+    horizontalAnnotations: [
+      {
+        color: 'whitesmoke',
+        dashStyle: 'LongDash',
+        label: { style: { color: '#FFF' }, text: 'Annotation label', y: -5 },
+        value: generateRandomInteger(-25, 125)
+      }
+    ],
+    series: [
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) }
+    ],
+    title: 'Line chart with a horizontal annotation',
+    width: '500px',
+    tooltipPointFormatter: customTooltipPointFormatter,
+    xAxis: {
+      type: 'datetime',
+      verticalLabels: true,
+      labelsFormatter: customLabelsFormatter
+    }
+  }
+};
+
+export const LineChartWithVerticalAnnotation: Story = {
+  args: {
+    isLoading: false,
+    height: '400px',
+    series: [
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) },
+      { values: generateRandomSeries(-50, 150) }
+    ],
+    title: 'Line chart with a horizontal annotation',
+    width: '500px',
+    tooltipPointFormatter: customTooltipPointFormatter,
+    verticalAnnotations: [
+      {
+        color: 'dodgerblue',
+        dashStyle: 'LongDash',
+        label: { style: { color: '#FFF' }, text: 'Annotation label', y: -5 },
+        value: generateRandomInteger(0, 11)
+      }
+    ],
+    xAxis: {
+      type: 'datetime',
+      verticalLabels: true,
+      labelsFormatter: customLabelsFormatter
+    }
   }
 };
 

@@ -1,4 +1,4 @@
-import { ReactElement, useRef } from 'react';
+import { MutableRefObject, ReactElement } from 'react';
 import { HighCharts, HighchartsReact } from '@/lib/highchartsInitialization';
 
 import { GradientColor } from '@/lib/gradients';
@@ -10,10 +10,12 @@ import {
   TooltipFormatter,
   TooltipPointFormatter,
   YAxisCategories,
+  XAxisCategories,
   YAxisReversed,
   YValue,
   xAxis,
-  yAxis
+  yAxis,
+  Chart
 } from '@/types/chartTypes';
 import {
   getDefaultLegendOptions,
@@ -24,6 +26,7 @@ import { getDefaultTooltipOptions } from '@/lib/tooltip';
 import merge from 'lodash/merge';
 import { CUIThemeType, useCUITheme } from '@clickhouse/click-ui';
 import { Loading } from '@/components/Loading';
+import { useChartRef } from 'src/lib/useChartRef';
 
 /**
  * Interface representing the Y-axis configuration for a heatmap chart.
@@ -34,6 +37,14 @@ export interface HeatmapYAxis extends yAxis {
 
   /** Indicates whether the Y-axis is reversed. */
   reversed?: YAxisReversed;
+}
+
+/**
+ * Interface representing the X-axis configuration for a heatmap chart.
+ */
+export interface HeatmapXAxis extends xAxis {
+  /** Category names for the X-axis. */
+  categories?: XAxisCategories;
 }
 
 /**
@@ -101,6 +112,9 @@ export interface HeatmapChartProps {
 
   /** Position of the legend. */
   legendPosition?: LegendHorizontalPosition;
+
+  /** A function for that passes a handle to the HighCharts chart as its argument */
+  chartRefCallback?: (ref: MutableRefObject<Chart | undefined>) => void;
 }
 
 const getMaxSeriesValue = (series: Array<HeatmapSeriesDescriptor>): number => {
@@ -228,7 +242,32 @@ const getLegendOptions = (options: HeatmapChartProps): HighCharts.LegendOptions 
   return legendOptions;
 };
 
-const getHighchartSeries = (options: HeatmapChartProps): SeriesOptionsType[] => {
+const processCategories = (
+  value: number | string | Date,
+  categories: string[],
+  indices: Record<string, number>
+): number | Date => {
+  if (typeof value === 'string' || value instanceof Date) {
+    const key = value.toString();
+    if (indices[key] === undefined) {
+      indices[key] = categories.length;
+      categories.push(value.toString());
+    }
+
+    return indices[key];
+  }
+
+  // Return int value, no need to categorize
+  return value;
+};
+
+interface HighchartSeriesProps {
+  series: SeriesOptionsType[];
+  xAxisCategories: string[] | undefined;
+  yAxisCategories: string[] | undefined;
+}
+
+const getHighchartSeries = (options: HeatmapChartProps): HighchartSeriesProps => {
   const getFillColor = (color: string | GradientColor) => {
     if (typeof color === 'string') {
       return color;
@@ -240,12 +279,21 @@ const getHighchartSeries = (options: HeatmapChartProps): SeriesOptionsType[] => 
     };
   };
 
-  return options.series.map(({ name, values, color, fillColor }) => {
+  const xCategories: string[] = [];
+  const yCategories: string[] = [];
+  const xIndices: Record<string, number> = {};
+  const yIndices: Record<string, number> = {};
+
+  const processedSeries = options.series.map(({ name, values, color, fillColor }) => {
     const data = values.map((value) => {
       if (typeof value === 'number') {
         return value;
       }
-      return [value.x, value.y, value.value];
+
+      const x = processCategories(value.x, xCategories, xIndices);
+      const y = processCategories(value.y, yCategories, yIndices);
+
+      return [x, y, value.value];
     });
 
     return {
@@ -257,6 +305,12 @@ const getHighchartSeries = (options: HeatmapChartProps): SeriesOptionsType[] => 
       borderColor: color
     };
   }) as SeriesOptionsType[];
+
+  return {
+    series: processedSeries,
+    xAxisCategories: xCategories.length > 0 ? xCategories : undefined,
+    yAxisCategories: yCategories.length > 0 ? yCategories : undefined
+  };
 };
 
 const getColorAxisOptions = (
@@ -312,13 +366,24 @@ const getHeatmapChartOptions = ({
     options.title = { text: '' };
   }
 
+  const { series, xAxisCategories, yAxisCategories } =
+    getHighchartSeries(additionalOptions);
+
+  options.series = series;
   options.xAxis = getXAxisOptions(additionalOptions);
   options.yAxis = getYAxisOptions(additionalOptions);
   options.tooltip = getTooltipOptions(additionalOptions);
   options.legend = getLegendOptions(additionalOptions);
-  options.series = getHighchartSeries(additionalOptions);
   options.colorAxis = getColorAxisOptions({ ...additionalOptions }, cuiTheme);
   options.plotOptions = getPlotOptions(additionalOptions);
+
+  if (xAxisCategories) {
+    options.xAxis.categories = xAxisCategories;
+  }
+
+  if (yAxisCategories) {
+    options.yAxis.categories = yAxisCategories;
+  }
 
   // Merge with any overrides from highChartsPropsOverrides
   if (additionalOptions.highChartsPropsOverrides) {
@@ -335,7 +400,9 @@ export const HeatmapChart = ({
   ...additionalOptions
 }: HeatmapChartProps): ReactElement => {
   const cuiTheme = useCUITheme();
-  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+  const { chartRefCallback } = additionalOptions;
+
+  const { chartComponentRef, chartCallback } = useChartRef(chartRefCallback);
 
   if (isLoading) {
     return <Loading height={height} width={width} />;
@@ -354,6 +421,7 @@ export const HeatmapChart = ({
       ref={chartComponentRef}
       highcharts={HighCharts}
       containerProps={containerProps}
+      callback={chartCallback}
     />
   );
 };

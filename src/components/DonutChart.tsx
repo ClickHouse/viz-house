@@ -19,6 +19,8 @@ export const DonutChart = ({
   highChartsPropsOverrides,
   ...additionalOptions
 }: DonutChartProps): ReactElement => {
+  const { chartRefCallback } = additionalOptions;
+
   if (isLoading) {
     return <Loading height={height} width={width} />;
   }
@@ -30,6 +32,7 @@ export const DonutChart = ({
       height={height}
       isLoading={isLoading}
       width={width}
+      chartRefCallback={chartRefCallback}
       highChartsPropsOverrides={{
         ...highChartsPropsOverrides,
         innerSize
