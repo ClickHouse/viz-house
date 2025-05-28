@@ -1,22 +1,60 @@
-## Setup
+Viz-house is the charting library that powers the Sql Console and Control Plane charts. It uses Highcharts under the hood. It is a yarn project that uses storybook and vite.
 
-To install all dependencies, from the root sql-console folder do `yarn` and it will install all dependencies from there
+##Prerequisites
+- You must have [yarn](https://classic.yarnpkg.com/lang/en/docs/install/) installed
 
-## To start this in dev mode,
-From the root sql-console folder do `yarn workspace @clickhouse/viz-house dev`
+## Setup
 
-## To build
+1. Install dependencies
+1. Build
 
-From the root sql-console folder do `yarn workspace @clickhouse/viz-house build`
+## Dev
+1. Run tests
+1. Run Storybook
+1. Run in dev mode
+1. Run tests in watch mode
 
-## To update sql-console with the latest build
+## Install dependencies
 
-From the root sql-console folder do `yarn up @clickhouse/viz-house` and then restart the sql-console
+```sh
+yarn
+```
 
-## To run tests
+done.
 
-From the root sql-console folder do `yarn workspace @clickhouse/viz-house test`
+## Build
 
-## To run Storybook
+```sh
+yarn build
+```
+This will create the `dist` directory. The `index.js` file is the exported library built and minified
 
-From the root sql-console folder do `yarn workspace @clickhouse/viz-house storybook` and open the browser to `http://localhost:6006/`
+
+## Run tests
+
+```sh
+yarn test
+```
+
+## Run Storybook
+
+```sh
+yarn storybook
+```
+
+## Run in dev mode,
+
+```sh
+yarn dev
+```
+
+dev mode will watch for changes and rebuil the project when changes are detected.
+
+
+## Run tests in watch mode
+
+```sh
+yarn test:watch
+```
+
+This will run tests in watch mode, which will let you develop while running tests.

@@ -8,10 +8,10 @@ import {
   TimePeriod
 } from '@/types/chartTypes';
 
-export const getDefaultXAxisOptions = (): Highcharts.XAxisOptions => {
+export const getDefaultXAxisOptions = (): HighCharts.XAxisOptions => {
   return {
     type: 'category',
-    uniqueNames: false, // Do not show two differen values with the same category at the same x-axis position
+    uniqueNames: false, // Do not show two different values with the same category at the same x-axis position
     labels: {
       style: {
         fontSize: '13px',
