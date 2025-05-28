@@ -11,7 +11,11 @@ import { XYChartProps, isBarChart, isColumnChart } from '@/components/XYChartTyp
  * @param {boolean} [params.stacked] - Indicates whether the chart data series should be stacked as bars or columns.
  * @returns {HighCharts.PlotOptions} The plot options to be applied to the HighCharts chart.
  */
-export function getPlotOptions({ series, hasDataLabels, stacked }: XYChartProps): HighCharts.PlotOptions {
+export function getPlotOptions({
+  series,
+  hasDataLabels,
+  stacked
+}: XYChartProps): HighCharts.PlotOptions {
   const defaultPlotOptions: HighCharts.PlotOptions = {
     series: {
       stacking: undefined

@@ -1,7 +1,11 @@
 import { HighCharts } from '@/lib/highchartsInitialization';
 import merge from 'lodash/merge';
 import { GradientColor } from '@/lib/gradients';
-import { getDefaultLegendOptions, getDefaultXAxisOptions, getDefaultYAxisOptions } from '@/lib/chartUtils';
+import {
+  getDefaultLegendOptions,
+  getDefaultXAxisOptions,
+  getDefaultYAxisOptions
+} from '@/lib/chartUtils';
 import { getDefaultTooltipOptions } from '@/lib/tooltip';
 import { getPlotOptions } from '@/components/XYChartPlotOptions';
 import { isBarChart, XYChartProps } from '@/components/XYChartTypes';
@@ -19,7 +23,8 @@ function getXAxisOptions(props: XYChartProps): HighCharts.XAxisOptions {
   // in case when there is not enough space.
   // Lower value like -9 degree forces it to prefer non-rotated labels when possible.
   xAxisOptions.labels.autoRotation = [-9];
-  xAxisOptions.labels.formatter = props?.xAxis?.labelsFormatter || xAxisOptions.labels.formatter;
+  xAxisOptions.labels.formatter =
+    props?.xAxis?.labelsFormatter || xAxisOptions.labels.formatter;
 
   if (title) {
     xAxisOptions.title = {
@@ -54,7 +59,9 @@ function getXAxisOptions(props: XYChartProps): HighCharts.XAxisOptions {
   return xAxisOptions;
 }
 
-export function getYAxisOptions(props: XYChartProps): HighCharts.YAxisOptions | HighCharts.YAxisOptions[] {
+export function getYAxisOptions(
+  props: XYChartProps
+): HighCharts.YAxisOptions | HighCharts.YAxisOptions[] {
   const yAxisOptionsArray: HighCharts.YAxisOptions[] = [];
 
   if (Array.isArray(props.yAxis) && props.series.length !== props.yAxis.length) {
@@ -75,7 +82,8 @@ export function getYAxisOptions(props: XYChartProps): HighCharts.YAxisOptions | 
     }
 
     yAxisOptions.labels = yAxisOptions.labels ?? {};
-    yAxisOptions.labels.formatter = yAxisProps?.labelsFormatter || yAxisOptions.labels.formatter;
+    yAxisOptions.labels.formatter =
+      yAxisProps?.labelsFormatter || yAxisOptions.labels.formatter;
     yAxisOptions.labels.rotation = yAxisProps?.verticalLabels ? -45 : 0;
 
     if (ticks) {

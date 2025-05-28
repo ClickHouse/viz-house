@@ -32,14 +32,7 @@ const buildHighchartsTheme = (cuiTheme: CUIThemeType): HighCharts.Options => {
       footerFormat: '</table>',
       pointFormat: `<tr><td><span style="color:{point.color}">●</span> {series.name}:</td><td style="text-align: right"><b>{point.y}</b></td></tr>`
     },
-    colors: [
-      bars.blue,
-      bars.orange,
-      bars.fuchsia,
-      bars.violet,
-      bars.teal,
-      bars.green
-    ],
+    colors: [bars.blue, bars.orange, bars.fuchsia, bars.violet, bars.teal, bars.green],
     credits: {
       enabled: false
     },
@@ -200,11 +193,7 @@ const buildHighchartsTheme = (cuiTheme: CUIThemeType): HighCharts.Options => {
   };
 };
 
-export function ChartsThemeProvider({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export function ChartsThemeProvider({ children }: { children: React.ReactNode }) {
   const cuiTheme = useCUITheme();
   const theme = buildHighchartsTheme(cuiTheme);
   HighCharts.setOptions(theme);

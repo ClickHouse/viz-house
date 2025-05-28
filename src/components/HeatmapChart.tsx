@@ -131,9 +131,7 @@ const getMinSeriesValue = (series: Array<HeatmapSeriesDescriptor>): number => {
   }, 0);
 };
 
-const getXAxisOptions = (
-  options: HeatmapChartProps
-): HighCharts.XAxisOptions => {
+const getXAxisOptions = (options: HeatmapChartProps): HighCharts.XAxisOptions => {
   const xAxisOptions = getDefaultXAxisOptions();
 
   const { title, domain, type } = options?.xAxis ?? {};
@@ -162,9 +160,7 @@ const getXAxisOptions = (
   return xAxisOptions;
 };
 
-const getYAxisOptions = (
-  options: HeatmapChartProps
-): HighCharts.YAxisOptions => {
+const getYAxisOptions = (options: HeatmapChartProps): HighCharts.YAxisOptions => {
   const yAxisOptions = getDefaultYAxisOptions();
 
   const { categories, max, min, reversed, ticks, title } = options?.yAxis ?? {};
@@ -202,9 +198,7 @@ const getYAxisOptions = (
   return yAxisOptions;
 };
 
-const getTooltipOptions = (
-  options: HeatmapChartProps
-): Highcharts.TooltipOptions => {
+const getTooltipOptions = (options: HeatmapChartProps): Highcharts.TooltipOptions => {
   const tooltipOptions = getDefaultTooltipOptions(
     options.tooltipPointFormatter,
     options.tooltipFormatter
@@ -217,9 +211,7 @@ const getTooltipOptions = (
   return tooltipOptions;
 };
 
-const getLegendOptions = (
-  options: HeatmapChartProps
-): HighCharts.LegendOptions => {
+const getLegendOptions = (options: HeatmapChartProps): HighCharts.LegendOptions => {
   const legendOptions = getDefaultLegendOptions();
 
   if (options.legendPosition) {
@@ -227,8 +219,7 @@ const getLegendOptions = (
       legendOptions.enabled = false;
     } else {
       legendOptions.enabled = true;
-      legendOptions.align =
-        options.legendPosition === 'left' ? 'left' : 'right';
+      legendOptions.align = options.legendPosition === 'left' ? 'left' : 'right';
       legendOptions.layout = 'vertical';
       legendOptions.verticalAlign = 'middle';
     }
@@ -237,9 +228,7 @@ const getLegendOptions = (
   return legendOptions;
 };
 
-const getHighchartSeries = (
-  options: HeatmapChartProps
-): SeriesOptionsType[] => {
+const getHighchartSeries = (options: HeatmapChartProps): SeriesOptionsType[] => {
   const getFillColor = (color: string | GradientColor) => {
     if (typeof color === 'string') {
       return color;

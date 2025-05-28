@@ -14,10 +14,7 @@ import { HeatmapChart } from '@/components/HeatmapChart';
 import { PieChart } from '@/components/PieChart';
 import { ResponsiveContainer } from '@/demoapp/ResponsiveContainer';
 import { DonutChart } from '@/components/DonutChart';
-import {
-  BasicAuthenticationScheme,
-  RemoteChart
-} from '@/components/RemoteChart';
+import { BasicAuthenticationScheme, RemoteChart } from '@/components/RemoteChart';
 import { XYChartValue } from '@/types/chartTypes';
 
 export const mockRequestUrl =
@@ -168,9 +165,7 @@ function Charts(): ReactElement {
               {
                 type: 'bellcurve',
                 values: data1,
-                fillColor: Gradients.linear(
-                  cuiTheme.global.color.chart.bars.orange
-                ),
+                fillColor: Gradients.linear(cuiTheme.global.color.chart.bars.orange),
                 color: cuiTheme.global.color.chart.bars.orange
               }
             ]}
@@ -195,9 +190,7 @@ function Charts(): ReactElement {
               {
                 type: 'bellcurve',
                 values: data1,
-                fillColor: Gradients.linear(
-                  cuiTheme.global.color.chart.bars.orange
-                ),
+                fillColor: Gradients.linear(cuiTheme.global.color.chart.bars.orange),
                 color: cuiTheme.global.color.chart.bars.orange
               }
             ]}
@@ -233,11 +226,7 @@ function Charts(): ReactElement {
         </Container>
         <Container orientation="vertical" gap="md">
           <Title type="h1">Pie Chart in Loading State</Title>
-          <PieChart
-            series={pieDataSeries}
-            title="Unicorns Favorite Foods"
-            isLoading
-          />
+          <PieChart series={pieDataSeries} title="Unicorns Favorite Foods" isLoading />
         </Container>
         <Container orientation="vertical" gap="md">
           <Title type="h1">Donut Chart</Title>

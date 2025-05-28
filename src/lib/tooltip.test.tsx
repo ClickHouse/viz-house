@@ -18,10 +18,7 @@ describe('The expanding width tooltip formatter', () => {
       points,
       x: date.valueOf()
     };
-    const tooltipFormatter = getExpandingWidthTooltipFormatter(
-      timePeriod,
-      formatYValue
-    );
+    const tooltipFormatter = getExpandingWidthTooltipFormatter(timePeriod, formatYValue);
 
     const formattedTooltip = tooltipFormatter.call(
       self as HighCharts.TooltipFormatterContextObject,
@@ -51,10 +48,7 @@ describe('The expanding width tooltip formatter', () => {
       points: manyPoints,
       x: date.valueOf()
     };
-    const tooltipFormatter = getExpandingWidthTooltipFormatter(
-      timePeriod,
-      formatYValue
-    );
+    const tooltipFormatter = getExpandingWidthTooltipFormatter(timePeriod, formatYValue);
 
     const formattedTooltip = tooltipFormatter.call(
       self as unknown as HighCharts.TooltipFormatterContextObject,
@@ -62,8 +56,7 @@ describe('The expanding width tooltip formatter', () => {
     );
 
     const rowCount = ((formattedTooltip as string).match(/<tr>/g) || []).length;
-    const columnCount = ((formattedTooltip as string).match(/<td>/g) || [])
-      .length;
+    const columnCount = ((formattedTooltip as string).match(/<td>/g) || []).length;
     expect(rowCount).toBe(8);
     expect(columnCount).toBe(16);
   });
@@ -84,10 +77,7 @@ describe('The expanding width tooltip formatter', () => {
       points: manyPoints,
       x: date.valueOf()
     };
-    const tooltipFormatter = getExpandingWidthTooltipFormatter(
-      timePeriod,
-      formatYValue
-    );
+    const tooltipFormatter = getExpandingWidthTooltipFormatter(timePeriod, formatYValue);
 
     const formattedTooltip = tooltipFormatter.call(
       self as unknown as HighCharts.TooltipFormatterContextObject,
@@ -95,8 +85,7 @@ describe('The expanding width tooltip formatter', () => {
     );
 
     const rowCount = ((formattedTooltip as string).match(/<tr>/g) || []).length;
-    const columnCount = ((formattedTooltip as string).match(/<td>/g) || [])
-      .length;
+    const columnCount = ((formattedTooltip as string).match(/<td>/g) || []).length;
     expect(rowCount).toBe(8);
     expect(columnCount).toBe(24);
   });

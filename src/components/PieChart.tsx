@@ -75,9 +75,7 @@ export interface PieChartProps {
  * @param {PieChartProps} options - The properties of the pie chart.
  * @returns {Highcharts.TooltipOptions} - The tooltip options for the pie chart.
  */
-const getTooltipOptions = (
-  options: PieChartProps
-): Highcharts.TooltipOptions => {
+const getTooltipOptions = (options: PieChartProps): Highcharts.TooltipOptions => {
   const tooltipOptions = getDefaultTooltipOptions(
     options.tooltipPointFormatter,
     options.tooltipFormatter
@@ -99,8 +97,7 @@ const getLegendOptions = (options: PieChartProps): HighCharts.LegendOptions => {
   const legendOptions = getDefaultLegendOptions();
   if (options.legendPosition) {
     legendOptions.enabled = options.legendPosition !== 'hidden';
-    legendOptions.verticalAlign =
-      options.legendPosition === 'top' ? 'top' : 'bottom';
+    legendOptions.verticalAlign = options.legendPosition === 'top' ? 'top' : 'bottom';
   }
 
   if (options?.highChartsPropsOverrides?.legend) {
@@ -115,9 +112,7 @@ const getLegendOptions = (options: PieChartProps): HighCharts.LegendOptions => {
  * @param {PieChartProps} options - The properties of the pie chart.
  * @returns {Highcharts.SeriesPieOptions[]} - The series options for the pie chart.
  */
-const getHighchartSeries = (
-  options: PieChartProps
-): HighCharts.SeriesPieOptions[] => {
+const getHighchartSeries = (options: PieChartProps): HighCharts.SeriesPieOptions[] => {
   return options.series.map(({ name, values, fillColor }) => {
     const data = values.map((value) => {
       return {

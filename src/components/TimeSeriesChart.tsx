@@ -1,11 +1,7 @@
 import { Chart, TimePeriod, XYChartValue, YValue } from '@/types/chartTypes';
 import merge from 'lodash/merge';
 import React, { MutableRefObject, ReactElement } from 'react';
-import {
-  XYChart,
-  XYChartProps,
-  XYSeriesDescriptor
-} from '@/components/XYChart';
+import { XYChart, XYChartProps, XYSeriesDescriptor } from '@/components/XYChart';
 
 import { HighchartsReact } from '@/lib/highchartsInitialization';
 import { getTooltipDateFormat } from '@/lib/chartUtils';
@@ -62,7 +58,7 @@ const tickPositioner = (seriesData: Array<YValue | null>): Array<number> => {
       ? seriesData.reduce((max: number, value: number | null): number => {
           return Math.max(max, value ?? 0);
         }, 0)
-      : seriesData[0] ?? 0;
+      : (seriesData[0] ?? 0);
 
   return calculateTickPosition(maxValue);
 };

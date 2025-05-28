@@ -1,4 +1,8 @@
-import { HeatmapSeriesDescriptor, PieSeriesDescriptor, XYSeriesDescriptor } from '@/components';
+import {
+  HeatmapSeriesDescriptor,
+  PieSeriesDescriptor,
+  XYSeriesDescriptor
+} from '@/components';
 import { HighCharts } from '@/lib/highchartsInitialization';
 
 export type AxisLabelsFormatterContext = HighCharts.AxisLabelsFormatterContextObject;
@@ -47,13 +51,22 @@ export type PieChartValue = {
 
 export type Series = HighCharts.Series;
 
-export type SeriesDescriptor = HeatmapSeriesDescriptor | PieSeriesDescriptor | XYSeriesDescriptor;
+export type SeriesDescriptor =
+  | HeatmapSeriesDescriptor
+  | PieSeriesDescriptor
+  | XYSeriesDescriptor;
 
 export type SeriesName = string;
 
 export type SeriesOptionsType = HighCharts.SeriesOptionsType;
 
-export type TimePeriod = 'LAST_HOUR' | 'LAST_DAY' | 'LAST_WEEK' | 'LAST_MONTH' | 'LAST_YEAR' | string;
+export type TimePeriod =
+  | 'LAST_HOUR'
+  | 'LAST_DAY'
+  | 'LAST_WEEK'
+  | 'LAST_MONTH'
+  | 'LAST_YEAR'
+  | string;
 
 export type TooltipFormatter = HighCharts.TooltipFormatterCallbackFunction;
 

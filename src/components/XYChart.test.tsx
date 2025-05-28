@@ -75,11 +75,7 @@ describe('XYCharts', () => {
 
     render(
       <ClickUIWrapper>
-        <XYChart
-          series={series}
-          xAxis={{ onZoom: handleZoom }}
-          zoom={{ min, max }}
-        />
+        <XYChart series={series} xAxis={{ onZoom: handleZoom }} zoom={{ min, max }} />
       </ClickUIWrapper>
     );
 

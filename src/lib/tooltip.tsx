@@ -1,8 +1,4 @@
-import {
-  TimePeriod,
-  TooltipFormatter,
-  TooltipPointFormatter
-} from '@/types/chartTypes';
+import { TimePeriod, TooltipFormatter, TooltipPointFormatter } from '@/types/chartTypes';
 import { HighCharts } from '@/lib/highchartsInitialization';
 import { formatDate, getTooltipDateFormat } from '@/lib/chartUtils';
 
@@ -56,10 +52,7 @@ export const getExpandingWidthTooltipFormatter = (
     const filteredPointsCount = filteredPoints.length;
 
     let tooltip = `
-        <span>${formatDate(
-          getTooltipDateFormat(timePeriod),
-          this.x as number
-        )}</span>`;
+        <span>${formatDate(getTooltipDateFormat(timePeriod), this.x as number)}</span>`;
 
     if (filteredPointsCount === 0) {
       return tooltip;
@@ -71,11 +64,7 @@ export const getExpandingWidthTooltipFormatter = (
 
     let i = 0;
     while (i < filteredPointsCount) {
-      for (
-        let currentColumn = 0;
-        currentColumn < columnCount;
-        currentColumn++
-      ) {
+      for (let currentColumn = 0; currentColumn < columnCount; currentColumn++) {
         const point = filteredPoints[i];
 
         if (!point) {

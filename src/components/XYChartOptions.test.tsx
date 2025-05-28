@@ -1,7 +1,4 @@
-import {
-  getXYChartOptions,
-  getYAxisOptions
-} from '@/components/XYChartOptions';
+import { getXYChartOptions, getYAxisOptions } from '@/components/XYChartOptions';
 import { XYChartProps } from '@/components/XYChartTypes';
 import { HighCharts } from '@/lib/highchartsInitialization';
 import { AxisLabelsFormatterContextObject, YAxisOptions } from 'highcharts';

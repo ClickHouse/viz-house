@@ -5,9 +5,7 @@ import { ChartsThemeProvider } from '@/components/ChartsThemeProvider';
 
 function ThemeProvider({ children }: { children: ReactNode }): ReactElement {
   const cuiTheme = useCUITheme();
-  return (
-    <EmotionThemeProvider theme={cuiTheme}>{children}</EmotionThemeProvider>
-  );
+  return <EmotionThemeProvider theme={cuiTheme}>{children}</EmotionThemeProvider>;
 }
 
 const clickUIProviderConfig = {
@@ -16,11 +14,7 @@ const clickUIProviderConfig = {
   }
 };
 
-export function ClickUIWrapper({
-  children
-}: {
-  children: ReactNode;
-}): ReactElement {
+export function ClickUIWrapper({ children }: { children: ReactNode }): ReactElement {
   return (
     <ClickUIProvider theme={'dark'} config={clickUIProviderConfig}>
       <ThemeProvider>{children}</ThemeProvider>

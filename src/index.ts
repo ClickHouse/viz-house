@@ -8,14 +8,25 @@ export { TimeSeriesChart } from '@/components/TimeSeriesChart';
 
 // Lib
 export { Gradients } from '@/lib/gradients';
-export { addEvent, formatDate, getTooltipDateFormat, removeEvent } from '@/lib/chartUtils';
+export {
+  addEvent,
+  formatDate,
+  getTooltipDateFormat,
+  removeEvent
+} from '@/lib/chartUtils';
 export { getExpandingWidthTooltipFormatter } from '@/lib/tooltip';
 
 // Types
-export type { HeatmapSeriesDescriptor, HeatmapChartProps } from '@/components/HeatmapChart';
+export type {
+  HeatmapSeriesDescriptor,
+  HeatmapChartProps
+} from '@/components/HeatmapChart';
 export type { PieChartProps, PieSeriesDescriptor } from '@/components/PieChart';
 export type { XYSeriesDescriptor, XYChartProps } from '@/components/XYChart';
-export type { TimeSeriesSeriesDescriptor, TimeSeriesChartProps } from '@/components/TimeSeriesChart';
+export type {
+  TimeSeriesSeriesDescriptor,
+  TimeSeriesChartProps
+} from '@/components/TimeSeriesChart';
 
 export type {
   AxisLabelsFormatterContext,

@@ -1,7 +1,7 @@
 export class JSONLinesTransformStream {
   private bufferedString: string;
   private decoder: TextDecoder;
-  private transformStream: TransformStream<Uint8Array, any>;
+  private transformStream: TransformStream<Uint8Array, unknown>;
 
   constructor() {
     this.bufferedString = '';
@@ -12,7 +12,10 @@ export class JSONLinesTransformStream {
     });
   }
 
-  private _transform(chunk: Uint8Array, controller: TransformStreamDefaultController<any>): void {
+  private _transform(
+    chunk: Uint8Array,
+    controller: TransformStreamDefaultController<unknown>
+  ): void {
     this.bufferedString += this.decoder.decode(chunk, { stream: true });
     const lines = this.bufferedString.split(/\r?\n/);
 
@@ -23,7 +26,9 @@ export class JSONLinesTransformStream {
           const jsonObject = JSON.parse(lines[i]);
           controller.enqueue(jsonObject); // Push the JSON object to the readable side
         } catch (error) {
-          controller.error(new Error('Failed to parse JSON: ' + (error as Error).message));
+          controller.error(
+            new Error('Failed to parse JSON: ' + (error as Error).message)
+          );
         }
       }
     }
@@ -32,7 +37,7 @@ export class JSONLinesTransformStream {
     this.bufferedString = lines[lines.length - 1];
   }
 
-  private _flush(controller: TransformStreamDefaultController<any>): void {
+  private _flush(controller: TransformStreamDefaultController<unknown>): void {
     // Process any remaining buffered string
     if (this.bufferedString.trim()) {
       try {
@@ -44,7 +49,7 @@ export class JSONLinesTransformStream {
     }
   }
 
-  get readable(): ReadableStream<any> {
+  get readable(): ReadableStream<unknown> {
     return this.transformStream.readable;
   }
 

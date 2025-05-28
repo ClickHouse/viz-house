@@ -35,12 +35,20 @@ export const getDefaultLegendOptions = (): HighCharts.LegendOptions => {
   };
 };
 
-export const isLegendHorizontalPosition = (legendPosition: string): legendPosition is LegendHorizontalPosition => {
-  return legendPosition === 'hidden' || legendPosition === 'left' || legendPosition === 'right';
+export const isLegendHorizontalPosition = (
+  legendPosition: string
+): legendPosition is LegendHorizontalPosition => {
+  return (
+    legendPosition === 'hidden' || legendPosition === 'left' || legendPosition === 'right'
+  );
 };
 
-export const isLegendVerticalPosition = (legendPosition: string): legendPosition is LegendVerticalPosition => {
-  return legendPosition === 'hidden' || legendPosition === 'top' || legendPosition === 'bottom';
+export const isLegendVerticalPosition = (
+  legendPosition: string
+): legendPosition is LegendVerticalPosition => {
+  return (
+    legendPosition === 'hidden' || legendPosition === 'top' || legendPosition === 'bottom'
+  );
 };
 
 export const addEvent = (
@@ -52,7 +60,11 @@ export const addEvent = (
   HighCharts.addEvent(chart, eventType, callbackFn, options);
 };
 
-export const removeEvent = (chart: Chart, eventType: string, callbackFn: EventCallbackFunction<Chart>): void => {
+export const removeEvent = (
+  chart: Chart,
+  eventType: string,
+  callbackFn: EventCallbackFunction<Chart>
+): void => {
   HighCharts.removeEvent(chart, eventType, callbackFn);
 };
 

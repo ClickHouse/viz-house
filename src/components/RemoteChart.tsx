@@ -38,14 +38,7 @@ export interface BasicAuthenticationScheme extends AuthenticationScheme {
  * Type representing the intervals for auto-refresh in the chart.
  * It can be a string with predefined intervals or a number (in milliseconds).
  */
-export type AutoRefreshInterval =
-  | '5s'
-  | '30s'
-  | '1m'
-  | '5m'
-  | '30m'
-  | '1h'
-  | number;
+export type AutoRefreshInterval = '5s' | '30s' | '1m' | '5m' | '30m' | '1h' | number;
 
 /**
  * Remote chart component properties.
@@ -79,9 +72,7 @@ export interface RemoteChartProps {
   width?: string;
 }
 
-const getIntervalFromAutoRefreshInterval = (
-  interval: AutoRefreshInterval
-): number => {
+const getIntervalFromAutoRefreshInterval = (interval: AutoRefreshInterval): number => {
   if (typeof interval === 'number') {
     return interval;
   }
@@ -136,9 +127,9 @@ const fetchQueryResults = (
         throw new Error(response.statusText);
       }
 
-      const pipedStream = (
-        response.body as ReadableStream<Uint8Array>
-      ).pipeThrough(streamTransformer);
+      const pipedStream = (response.body as ReadableStream<Uint8Array>).pipeThrough(
+        streamTransformer
+      );
 
       const parsedJsonObjects: Array<StreamingJsonResult> = [];
       for await (const parsedJsonObject of streamToAsyncIterator(pipedStream)) {
@@ -224,8 +215,7 @@ export const RemoteChart = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [series, setSeries] = useState<Array<SeriesDescriptor>>([]);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [intervalId, setIntervalId] =
-    useState<ReturnType<typeof setInterval>>();
+  const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
     setIsLoading(true);

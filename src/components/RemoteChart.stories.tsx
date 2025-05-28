@@ -1,17 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 
-import {
-  BasicAuthenticationScheme,
-  RemoteChart
-} from '@/components/RemoteChart';
+import { BasicAuthenticationScheme, RemoteChart } from '@/components/RemoteChart';
 import { XYChart } from '@/components/XYChart';
 import { Title, useCUITheme } from '@clickhouse/click-ui';
-import {
-  HeatmapChartValue,
-  PieChartValue,
-  XYChartValue
-} from '@/types/chartTypes';
+import { HeatmapChartValue, PieChartValue, XYChartValue } from '@/types/chartTypes';
 import { DonutChart } from '@/components/DonutChart';
 import { HeatmapChart } from '@/components/HeatmapChart';
 
@@ -57,9 +50,7 @@ const createReadableStreamFromData = (data: Array<unknown>): ReadableStream => {
       const encoder = new TextEncoder();
       controller.enqueue(
         encoder.encode(
-          data
-            .map((dataObject: unknown) => JSON.stringify(dataObject))
-            .join('\n')
+          data.map((dataObject: unknown) => JSON.stringify(dataObject)).join('\n')
         )
       );
       controller.close();
@@ -69,8 +60,7 @@ const createReadableStreamFromData = (data: Array<unknown>): ReadableStream => {
 
 const generateRandomInteger = (min: number, max: number) => {
   return (
-    Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) +
-    Math.ceil(min)
+    Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min)
   );
 };
 
