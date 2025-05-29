@@ -1,0 +1,64 @@
+name: publish
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag'
+        required: true
+        type: string
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Set tag from input
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "GITHUB_TAG=${{ github.event.inputs.tag }}" >> "$GITHUB_ENV"
+      - name: Set tag from REF
+        if: github.event_name == 'release'
+        run: |
+          echo "GITHUB_TAG=${GITHUB_REF#refs/tags/}" >> "$GITHUB_ENV"
+      - name: Checkout repository on release
+        if: github.event_name == 'release'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.target_commitish }}
+          token: ${{secrets.PAT_TOKEN}}
+          fetch-depth: 0
+      - name: Checkout repository on workflow_dispatch
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+      - name: Set up Git
+        run: |
+          git config user.email "actions@clickhouse.com"
+          git config user.name "GitHub Actions"
+      - name: Bump package version
+        run: |
+          npm pkg set version=$GITHUB_TAG
+
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn install --frozen-lockfile
+      - run: yarn test
+      - run: yarn build
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
+      - name: Update package version
+        run: |
+          git add package.json yarn.lock
+          git commit -m '[automated] bump version to ${{ env.GITHUB_TAG }}'
+          git push
+      - name: Set tag from input
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git tag $GITHUB_TAG
+          git push origin $GITHUB_TAG
+
+
