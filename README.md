@@ -1,6 +1,6 @@
 Viz-house is the charting library that powers the Sql Console and Control Plane charts. It uses Highcharts under the hood. It is a yarn project that uses storybook and vite.
 
-##Prerequisites
+## Prerequisites
 - You must have [yarn](https://classic.yarnpkg.com/lang/en/docs/install/) installed
 
 ## Setup
