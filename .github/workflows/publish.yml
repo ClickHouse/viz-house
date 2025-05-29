@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - name: Debug initial step
-      run echo "Initial step got here"
-
       - name: Set tag from input
         if: github.event_name == 'workflow_dispatch'
         run: |
@@ -42,16 +39,6 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      # Debug: Log event details
-      - name: Log event details
-        run: |
-          echo "Event name: ${{ github.event_name }}"
-          echo "Tag: ${{ env.GITHUB_TAG }}"
-          echo "Repository: ${{ github.repository }}"
-          echo "Ref: ${{ github.ref }}"
-          echo "Branch: ${{ github.ref_name }}"
-          echo "Commit SHA: ${{ github.sha }}"
 
       - name: Set up Git
         run: |
