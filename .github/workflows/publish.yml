@@ -1,4 +1,4 @@
-name: publish
+name: Publish to npm
 on:
   release:
     types: [published]
@@ -8,8 +8,9 @@ on:
         description: 'Release tag'
         required: true
         type: string
+
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -17,44 +18,56 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: |
           echo "GITHUB_TAG=${{ github.event.inputs.tag }}" >> "$GITHUB_ENV"
+
       - name: Set tag from REF
         if: github.event_name == 'release'
         run: |
           echo "GITHUB_TAG=${GITHUB_REF#refs/tags/}" >> "$GITHUB_ENV"
+
       - name: Checkout repository on release
         if: github.event_name == 'release'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.release.target_commitish }}
-          token: ${{secrets.PAT_TOKEN}}
           fetch-depth: 0
+
       - name: Checkout repository on workflow_dispatch
         if: github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v4
+
       - name: Set up Git
         run: |
           git config user.email "actions@clickhouse.com"
           git config user.name "GitHub Actions"
-      - name: Bump package version
+
+      - name: Bump npm version
         run: |
-          npm pkg set version=$GITHUB_TAG
+          npm version $GITHUB_TAG --no-git-tag-version
 
       # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v3
+      - name: Setup node.js
+      - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+
       - run: yarn install --frozen-lockfile
+
       - run: yarn test
+
       - run: yarn build
+
       - run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_CI_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_CI_PUBLISH_TOKEN }}
+
       - name: Update package version
         run: |
           git add package.json yarn.lock
           git commit -m '[automated] bump version to ${{ env.GITHUB_TAG }}'
           git push
+
       - name: Set tag from input
         if: github.event_name == 'workflow_dispatch'
         run: |
