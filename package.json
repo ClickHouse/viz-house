@@ -1,12 +1,17 @@
 {
   "name": "@clickhouse/viz-house",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
   "type": "module",
   "files": [
     "dist",
     "src"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ClickHouse/viz-house.git"
+  },
+  "homepage": "https://clickhouse.com",
   "module": "./dist/index.js",
   "exports": {
     ".": {

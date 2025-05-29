@@ -10,3 +10,4 @@ jest-html-reporters-attach/
 # Ignore all HTML files:
 **/*.html
 extras/auth0
+public/mockServiceWorker.js
