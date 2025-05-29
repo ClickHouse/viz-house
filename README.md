@@ -42,7 +42,7 @@ yarn test
 yarn storybook
 ```
 
-## Run in dev mode,
+## Run in dev mode
 
 ```sh
 yarn dev
