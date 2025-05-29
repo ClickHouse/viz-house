@@ -21,6 +21,7 @@
     "build:watch": "vite build --watch",
     "lint": "eslint . --ext ts,tsx",
     "lint:strict": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "prettier:check": "prettier --check \"**/*.{js,jsx,ts,tsx}\" --config .prettierrc",
     "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx}\" --config .prettierrc",
     "preview": "vite preview",
     "test:watch": "vitest",

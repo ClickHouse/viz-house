@@ -1,0 +1,37 @@
+name: CI Pipeline
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn' # Cache yarn dependencies for faster runs
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Typecheck
+        run: yarn typecheck
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Prettier
+        run: yarn prettier:check
+
+      - name: Tests
+        run: yarn test
+
+      - name: Build
+        run: yarn build
