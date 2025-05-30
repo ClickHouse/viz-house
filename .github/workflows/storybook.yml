@@ -1,0 +1,44 @@
+name: Deploy Storybook to GitHub Pages
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+  workflow_dispatch: # Added for manual triggering
+
+jobs:
+  deploy-storybook:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) # Run for workflow_dispatch or merged PR
+    permissions:
+      contents: read # For checkout
+      pages: write # For deploying to GitHub Pages
+      id-token: write # For GitHub Pages authentication
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Storybook
+        run: yarn build-storybook
+
+      - name: Deploy to GitHub Pages
+        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        with:
+          install_command: yarn install --frozen-lockfile
+          build_command: yarn build-storybook
+          path: storybook-static
+          checkout: false # Checkout handled above
