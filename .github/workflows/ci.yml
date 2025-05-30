@@ -2,7 +2,6 @@ name: CI Pipeline
 
 on:
   push:
-    branches: ['**'] # Only trigger on branch pushes, not tags
   workflow_dispatch:
 
 jobs:
