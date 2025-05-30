@@ -13,17 +13,32 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      contents: write # For pushing commits and tags
+      packages: write # For publishing packages
+
     steps:
+       # Set tag from release event
+      - name: Set tag from release
+        if: github.event_name == 'release'
+        run: |
+          echo "GITHUB_TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+
+      # Set tag from workflow_dispatch input
       - name: Set tag from input
         if: github.event_name == 'workflow_dispatch'
         run: |
-          echo "GITHUB_TAG=${{ github.event.inputs.tag }}" >> "$GITHUB_ENV"
+          echo "GITHUB_TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
 
-      - name: Set tag from REF
-        if: github.event_name == 'release'
+      # Debug: Log GITHUB_TOKEN availability
+      - name: Check GITHUB_TOKEN
         run: |
-          echo "GITHUB_TAG=${GITHUB_REF#refs/tags/}" >> "$GITHUB_ENV"
+          if [ -z "${{ secrets.GITHUB_TOKEN }}" ]; then
+            echo "Error: GITHUB_TOKEN is not available"
+            exit 1
+          else
+            echo "GITHUB_TOKEN is available"
+          fi
 
       - name: Checkout repository on release
         if: github.event_name == 'release'
