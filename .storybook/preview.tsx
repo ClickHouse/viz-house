@@ -1,13 +1,9 @@
 import type { Preview } from '@storybook/react';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
-import { initialize, mswLoader } from 'msw-storybook-addon';
 import { StorybookWrapper } from '@/lib/ClickUIWrapper';
 import { Container } from '@clickhouse/click-ui';
 
 import './style-overrides.css';
-
-// Initialize MSW
-initialize();
 
 export const decorators = [
   (Story) => {
@@ -32,8 +28,7 @@ const preview: Preview = {
     },
     deepControls: { enabled: true }
   },
-  tags: ['autodocs'],
-  loaders: [mswLoader]
+  tags: ['autodocs']
 };
 
 export default preview;

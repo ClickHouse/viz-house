@@ -72,7 +72,7 @@ function Charts(): ReactElement {
   return (
     <Container orientation="vertical" gap="md">
       <Title type="h1" size="xl">
-        Charts with Highcharts
+        Vizhouse charts
       </Title>
       <GridContainer gridTemplateColumns="repeat(3, 1fr)" gap="md">
         <Container orientation="vertical" gap="md">
