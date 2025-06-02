@@ -90,3 +90,5 @@ export const getTooltipDateFormat = (timePeriod?: TimePeriod): string => {
       return '%Y-%m-%d';
   }
 };
+
+export const formatNumber = HighCharts.numberFormat;

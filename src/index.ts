@@ -8,7 +8,12 @@ export { TimeSeriesChart } from '@/components/TimeSeriesChart';
 
 // Lib
 export { Gradients } from '@/lib/gradients';
-export { addEvent, getTooltipDateFormat, removeEvent } from '@/lib/chartUtils';
+export {
+  addEvent,
+  formatNumber,
+  getTooltipDateFormat,
+  removeEvent
+} from '@/lib/chartUtils';
 export { getExpandingWidthTooltipFormatter } from '@/lib/tooltip';
 
 // Types
@@ -32,6 +37,7 @@ export type {
   HeatmapChartValue,
   LegendHorizontalPosition,
   LegendVerticalPosition,
+  Options,
   PieChartValue,
   Series,
   SeriesDescriptor,
