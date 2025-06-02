@@ -49,6 +49,10 @@ export interface Legend {
   enabled: boolean;
 }
 
+// Todo: this should be cleaned up
+// https://github.com/ClickHouse/viz-house/issues/6
+export type Options = HighCharts.Options;
+
 // PieChartValue is a type that represents the data for a single slice of a pie chart.
 export type PieChartValue = {
   name: string;
