@@ -71,6 +71,10 @@ export type SeriesName = string;
 
 export type SeriesOptionsType = HighCharts.SeriesOptionsType;
 
+// Todo: this should be cleaned up
+// https://github.com/ClickHouse/viz-house/issues/6
+export type SeriesPieOptions = HighCharts.SeriesPieOptions;
+
 export type TimePeriod =
   | 'LAST_HOUR'
   | 'LAST_DAY'

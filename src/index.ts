@@ -43,6 +43,7 @@ export type {
   SeriesDescriptor,
   SeriesName,
   SeriesOptionsType,
+  SeriesPieOptions,
   Tooltip,
   TooltipFormatter,
   TooltipPointFormatter,
