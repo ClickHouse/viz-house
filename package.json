@@ -37,7 +37,7 @@
     "test": "vitest --run --coverage",
     "test:ci": "cross-env CI=true vitest --run --reporter=github-actions --reporter=html --outputFile.html=reports/index.html --reporter=verbose --coverage",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "storybook:build": "storybook build -o storybook-static",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
