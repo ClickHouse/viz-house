@@ -14,13 +14,6 @@ import { HeatmapChart } from '@/components/HeatmapChart';
 import { PieChart } from '@/components/PieChart';
 import { ResponsiveContainer } from '@/demoapp/ResponsiveContainer';
 import { DonutChart } from '@/components/DonutChart';
-import { BasicAuthenticationScheme, RemoteChart } from '@/components/RemoteChart';
-import { XYChartValue } from '@/types/chartTypes';
-
-export const mockRequestUrl =
-  'http://localhost:8911/.api/query-endpoints/d98c0b84-0b12-4777-b90b-79e22098acac/run';
-const mockUsername = 'foo';
-const mockPassword = 'bar';
 
 function Charts(): ReactElement {
   const cuiTheme = useCUITheme();
@@ -231,43 +224,6 @@ function Charts(): ReactElement {
         <Container orientation="vertical" gap="md">
           <Title type="h1">Donut Chart</Title>
           <DonutChart series={pieDataSeries} title="Unicorns Favorite Foods" />
-        </Container>
-        <Container orientation="vertical" gap="md">
-          <Title type="h1">Remote chart</Title>
-          <RemoteChart
-            authentication={
-              {
-                type: 'basic',
-                username: mockUsername,
-                password: mockPassword
-              } as BasicAuthenticationScheme
-            }
-            chartConfig={{
-              series: [
-                {
-                  name: 'Bytes read',
-                  xAxis: { column: 'event_time', type: 'date' },
-                  yAxis: { column: 'read_bytes' }
-                }
-              ]
-            }}
-            url={mockRequestUrl}
-          >
-            {({ isLoading, series }) => {
-              return (
-                <XYChart
-                  isLoading={isLoading}
-                  series={series.map((serie, i) => {
-                    return {
-                      name: serie?.name ? `${serie.name}` : `Series ${i}`,
-                      values: serie.values as Array<XYChartValue>
-                    };
-                  })}
-                  title="Remote chart"
-                />
-              );
-            }}
-          </RemoteChart>
         </Container>
       </GridContainer>
       <Separator size="md" />

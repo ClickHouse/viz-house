@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { http, HttpResponse } from 'msw';
 import { setupWorker } from 'msw/browser';
-import { App, mockRequestUrl } from '@/demoapp/App';
+import { App } from '@/demoapp/App';
+
+export const mockRequestUrl =
+  'http://localhost:8911/.api/query-endpoints/d98c0b84-0b12-4777-b90b-79e22098acac/run';
 
 const initializeMockServiceWorker = async () => {
   const worker = setupWorker(
