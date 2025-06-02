@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/ClickHouse/viz-house.git"
   },
-  "homepage": "https://clickhouse.com",
+  "homepage": "https://viz-house.vercel.app/",
   "module": "./dist/index.js",
   "exports": {
     ".": {
