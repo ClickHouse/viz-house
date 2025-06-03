@@ -5,6 +5,7 @@ import {
   Chart,
   LegendVerticalPosition,
   PieChartValue,
+  PropsOverrides,
   TooltipFormatter,
   TooltipPointFormatter
 } from '@/types/chartTypes';
@@ -49,7 +50,7 @@ export interface PieChartProps {
   /**
    * Highcharts props to override the default options.
    */
-  highChartsPropsOverrides?: HighchartsReact.Props;
+  highChartsPropsOverrides?: PropsOverrides;
 
   /**
    * Title and subtitle of the chart.

@@ -15,7 +15,8 @@ import {
   YValue,
   xAxis,
   yAxis,
-  Chart
+  Chart,
+  PropsOverrides
 } from '@/types/chartTypes';
 import {
   getDefaultLegendOptions,
@@ -81,7 +82,7 @@ export interface HeatmapChartProps {
   height?: string;
 
   /** Overrides for the Highcharts React properties. */
-  highChartsPropsOverrides?: HighchartsReact.Props;
+  highChartsPropsOverrides?: PropsOverrides;
 
   /** Indicates whether the chart is in a loading state. */
   isLoading?: boolean;

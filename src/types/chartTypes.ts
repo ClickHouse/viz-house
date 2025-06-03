@@ -3,7 +3,7 @@ import {
   PieSeriesDescriptor,
   XYSeriesDescriptor
 } from '@/components';
-import { HighCharts } from '@/lib/highchartsInitialization';
+import { HighCharts, HighchartsReact } from '@/lib/highchartsInitialization';
 
 export type AxisLabelsFormatterContext = HighCharts.AxisLabelsFormatterContextObject;
 
@@ -59,6 +59,8 @@ export type PieChartValue = {
   y: YValue;
   color?: string;
 };
+
+export type PropsOverrides = HighchartsReact.Props;
 
 export type Series = HighCharts.Series;
 
