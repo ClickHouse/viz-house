@@ -1,9 +1,9 @@
-import HighchartsReact from 'highcharts-react-official';
 import { GradientColor } from '@/lib/gradients';
 import {
   Annotation,
   Chart,
   LegendVerticalPosition,
+  PropsOverrides,
   SeriesName,
   Tooltip,
   TooltipFormatter,
@@ -46,7 +46,7 @@ export interface XYChartProps {
   /** The height of the chart container, can be any valid CSS height value. */
   height?: string;
   /** Allows overriding the default HighchartsReact props. */
-  highChartsPropsOverrides?: HighchartsReact.Props;
+  highChartsPropsOverrides?: PropsOverrides;
   /** Configure a line that goes across the x axis */
   horizontalAnnotations?: Array<Annotation>;
   /** If true, displays a loading spinner instead of the chart. */

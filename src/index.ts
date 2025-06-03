@@ -39,6 +39,7 @@ export type {
   LegendVerticalPosition,
   Options,
   PieChartValue,
+  PropsOverrides,
   Series,
   SeriesDescriptor,
   SeriesName,

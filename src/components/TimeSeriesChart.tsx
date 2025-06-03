@@ -1,9 +1,14 @@
-import { Chart, TimePeriod, XYChartValue, YValue } from '@/types/chartTypes';
+import {
+  Chart,
+  PropsOverrides,
+  TimePeriod,
+  XYChartValue,
+  YValue
+} from '@/types/chartTypes';
 import merge from 'lodash/merge';
 import React, { MutableRefObject, ReactElement } from 'react';
 import { XYChart, XYChartProps, XYSeriesDescriptor } from '@/components/XYChart';
 
-import { HighchartsReact } from '@/lib/highchartsInitialization';
 import { getTooltipDateFormat } from '@/lib/chartUtils';
 
 /**
@@ -87,7 +92,7 @@ const TimeSeriesChart = ({
   xAxis,
   ...props
 }: TimeSeriesChartProps): ReactElement => {
-  const highchartsOverrides: HighchartsReact.Props = {
+  const highchartsOverrides: PropsOverrides = {
     xAxis: {
       type: 'datetime',
       showEmpty: false,
